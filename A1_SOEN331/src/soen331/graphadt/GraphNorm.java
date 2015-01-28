@@ -23,11 +23,10 @@ public class GraphNorm <T> {
 		}
 		return ret;
 	}
-	public Set<HashMap<String, ArrayList<Node<T>>>> edges(){
-		Set<HashMap<String, ArrayList<Node<T>>>> ret = null;
-		for(int i=0; i<this.edges.length; i++){
-			ret.add(this.edges[i].getEdges());
-		}
+	public Set<HashMap<String, ArrayList<T>>> edges(){
+		Set<HashMap<String, ArrayList<T>>> ret = null;
+		
+		
 		return ret;
 	}
 	public int countAllEdges(){
@@ -36,16 +35,29 @@ public class GraphNorm <T> {
 	public int countAllVertices(){
 		return (this.vertices.length-1);
 	}
-	public String getEdge(Node<T>v, Node<T>w){
+	public String getEdge(T v, T w){
+		Node<T> head = findNodefromT(v);
+		Node<T> tail = findNodefromT(w);
 		String ret = "";
 		for(int i=0; i<this.edges.length; i++){
-			String edgeID = this.edges[i].testNodes(w, v);
+			String edgeID = this.edges[i].testNodes(head, tail);
 			if(!edgeID.equals(null)){
 				ret = edgeID;
 			}
 		}
 		return ret;
 	}
+	
+	private Node<T> findNodefromT(T elem){
+		Node<T> ret = null;
+		for(int i=0; i<this.vertices.length;i++){
+			if(this.vertices[i].getElem().equals(elem)){
+				ret = this.vertices[i];
+			}
+		}
+		return ret;
+	}
+	
 	
 	
 

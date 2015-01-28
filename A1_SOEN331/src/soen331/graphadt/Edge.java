@@ -33,12 +33,12 @@ public class Edge<T> {
 	public String getID(){
 		return this.id;
 	}
-	public HashMap<String, ArrayList<Node<T>>> getEdges(){
-		ArrayList<Node<T>> nodeArray = new ArrayList<Node<T>>();
-		HashMap<String, ArrayList<Node<T>>> ret = new HashMap<String, ArrayList<Node<T>>>();
-		nodeArray.add(getHead());
-		nodeArray.add(getTail());
-		ret.put(getID(),nodeArray);
+	public HashMap<String,ArrayList<T>> getEdges(){
+		ArrayList<T> nodeList = new ArrayList<T>();
+		HashMap<String, ArrayList<T>> ret = new HashMap<String, ArrayList<T>>();
+		nodeList.add(getHead().getElem());
+		nodeList.add(getTail().getElem());
+		ret.put(getID(),nodeList);
 		return ret;
 	}
 	
