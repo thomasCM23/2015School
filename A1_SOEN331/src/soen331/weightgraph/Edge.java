@@ -6,8 +6,8 @@ public class Edge<T> {
 	private T elem;
 	
 	public Edge(){
-		this.head = null;
-		this.tail = null;
+		this.head = new Node<T>();
+		this.tail = new Node<T>();
 		this.elem = null;
 	}
 	public Edge(Node<T> head, Node<T> tail, T elem){

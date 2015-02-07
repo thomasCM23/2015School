@@ -9,20 +9,16 @@ public class NewGraph<T> {
 	private ArrayList<Edge<T>> edges;
 	
 	public NewGraph(){
-		this.vertecies = new ArrayList<Node<T>>();
-		this.edges = new ArrayList<Edge<T>>();
+		this.vertecies = new ArrayList<Node<T>>(10);
+		this.edges = new ArrayList<Edge<T>>(10);
 	}
 	//return the vertices as pointers
 	public ArrayList<Node<T>> vertices(){
 		return this.vertecies;
 	}
 	//return the edges elem
-	public Set<Edge<T>> edges(){
-		Set<Edge<T>> ret = null;
-		for(int i=0; i<this.edges.size(); i++){
-			ret.add(this.edges.get(i));
-		}
-		return ret;
+	public ArrayList<Edge<T>> edges(){
+		return this.edges;
 	}
 	public int countAllVertices(){
 		return this.vertecies.size();
@@ -32,15 +28,14 @@ public class NewGraph<T> {
 	}
 	//returns the element on the edge between the two vertices
 	public Edge<T> getEdge(Node<T> head, Node<T> tail){
-		Edge<T> ret = null;
-		for(int i=0; i<this.edges.size(); i++){
-			Edge<T> temp = this.edges.get(i).getEdge(head, tail);
-			if( ! temp.equals(null)){
-				ret = temp;
-				return ret;
+		for(int i=0; i<head.getEdgeList().size();i++){
+			for(int j=0; i<tail.getEdgeList().size();j++){
+				if(head.getEdgeList().get(i).equals(tail.getEdgeList().get(j))){
+					return tail.getEdgeList().get(j);
+				}
 			}
 		}
-		return ret;
+		return null;
 	}
 	//return a set of all the incident edges elements at the node 
 	@SuppressWarnings("null")
@@ -66,11 +61,9 @@ public class NewGraph<T> {
 		return ret;
 	}
 	public boolean areAdjacent(Node<T> v, Node<T> w){
-		ArrayList<Edge<T>> vEdges = v.getEdgeList();
-		ArrayList<Edge<T>> wEdges = w.getEdgeList();
-		for(int i=0; i<vEdges.size();i++){
-			for(int j=0; i<wEdges.size();i++){
-				if(vEdges.get(i).equals(wEdges.get(j))){
+		for(int i=0; i<v.getEdgeList().size();i++){
+			for(int j=0; j<w.getEdgeList().size(); j++){
+				if(v.getEdgeList().get(i).equals(w.getEdgeList().get(j))){
 					return true;
 				}
 			}
@@ -78,7 +71,8 @@ public class NewGraph<T> {
 		return false;
 	}
 	public NewGraph<T> insertVertex(Node<T> v){
-		this.vertecies.add(v);
+		if(!this.vertecies.contains(v))
+			this.vertecies.add(v);
 		return this;
 	}
 	public NewGraph<T> removeVertex(Node<T> v){
@@ -94,26 +88,22 @@ public class NewGraph<T> {
 	}
 	public NewGraph<T> insertEdge(Node<T> v, Node<T> w, T elem){
 		Edge<T> newEdge = new Edge<T>();
+		v.setEdge(newEdge);
+		w.setEdge(newEdge);
 		newEdge.setElem(elem);
 		newEdge.setHead(v);
 		newEdge.setTail(w);
-		if(!this.vertecies.contains(v))
-			this.vertecies.add(v);
-		if(!this.vertecies.contains(w))
-			this.vertecies.add(w);
-		v.setEdge(newEdge);
-		w.setEdge(newEdge);
 		this.edges.add(newEdge);
 		return this;
 	}
 	public NewGraph<T> removeEdge(Node<T> v, Node<T> w){
 		if(areAdjacent(v, w)){
 			Edge<T> temp = getEdge(v, w);
-			v.removeEdge(temp);
-			w.removeEdge(temp);
-			temp.setElem(null);
 			temp.setHead(null);
 			temp.setTail(null);
+			temp.setElem(null);
+			v.getEdgeList().remove(temp);
+			w.getEdgeList().remove(temp);
 			this.edges.remove(temp);
 		}
 		return this;

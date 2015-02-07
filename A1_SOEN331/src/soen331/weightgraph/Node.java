@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Node<T> {
 	private ArrayList<Edge<T>> edges;
 	public Node(){
-		this.edges = new ArrayList<Edge<T>>();;
+		this.edges = new ArrayList<Edge<T>>(10);;
 	}
 	public ArrayList<Edge<T>>getEdgeList(){
 		return this.edges;
