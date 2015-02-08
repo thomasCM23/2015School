@@ -1,6 +1,7 @@
 package soen331.weightgraph;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Set;
 
 public class NewGraph<T> {
@@ -39,11 +40,12 @@ public class NewGraph<T> {
 	}
 	//return a set of all the incident edges elements at the node 
 	@SuppressWarnings("null")
-	public Set<T> incidentEdges(Node<T> v){
-		Set<T> ret = null;
+	public String incidentEdges(Node<T> v){
+		String ret = "";
 		ArrayList<Edge<T>> temp = v.getEdgeList();
 		for(int i=0; i<temp.size(); i++){
-			ret.add(temp.get(i).getElem());
+			Edge<T> tempEdge = temp.get(i);
+			ret = ret +"{{"+tempEdge.getHead()+","+tempEdge.getTail()+"},"+tempEdge+",";
 		}
 		return ret;
 	}
@@ -54,8 +56,8 @@ public class NewGraph<T> {
 		return ret;
 	}
 	//return the ends of the edge
-	public Set<Node<T>> endVertices(Edge<T> e){
-		Set<Node<T>> ret = null;
+	public ArrayList<Node<T>> endVertices(Edge<T> e){
+		ArrayList<Node<T>> ret = new ArrayList<Node<T>>();
 		ret.add(e.getHead());
 		ret.add(e.getTail());
 		return ret;
